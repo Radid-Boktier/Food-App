@@ -1,12 +1,20 @@
 import { useContext } from 'react';
 import foodLogo from '../assets/logo.jpg';
 import CartContext from '../store/CartContext';
+import UserProgressContext from '../store/UserProgressContext';
 import Button from './Button';
-export default function Header({ handleShowCart }) {
+
+export default function Header() {
   const cartCntx = useContext(CartContext);
+  const userProgressCntx = useContext(UserProgressContext);
+
   const totalCartItems = cartCntx.items.reduce((totalNumberOfItems, item) => {
     return totalNumberOfItems + item.quantity;
   }, 0);
+
+  function handleShowCart() {
+    userProgressCntx.showCart();
+  }
   return (
     <header id="main-header">
       <div id="title">

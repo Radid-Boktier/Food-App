@@ -1,14 +1,19 @@
 import './App.css';
+import Cart from './components/Cart';
 import FoodCart from './components/FoodCart';
 import Header from './components/Header';
 import { CartContextProvider } from './store/CartContext';
+import { UserProgressContextProvider } from './store/UserProgressContext';
 
 function App() {
   return (
-    <CartContextProvider>
-      <Header />
-      <FoodCart />
-    </CartContextProvider>
+    <UserProgressContextProvider>
+      <CartContextProvider>
+        <Header />
+        <FoodCart />
+        <Cart />
+      </CartContextProvider>
+    </UserProgressContextProvider>
   );
 }
 
