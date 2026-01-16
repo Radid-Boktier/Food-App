@@ -1,25 +1,23 @@
-import { meals } from '../data/meals.js';
-import Button from './Button.jsx';
+import { useEffect, useState } from 'react';
+import MealItem from './MealItem.jsx';
 export default function FoodCart({ handleAddCart }) {
+  const [loadedMeals, setLoadedMeals] = useState([]);
+
+  useEffect(() => {
+    async function fetchMeals() {
+      const response = await fetch('http://localhost:3000/meals');
+      if (!response.ok) {
+      }
+      const meals = await response.json();
+      setLoadedMeals(meals);
+    }
+    fetchMeals();
+  }, []);
   return (
-    <div id="meals">
-      {meals.map((meal) => {
-        return (
-          <div className="meal-item" key={meal.id}>
-            <article>
-              <img src={meal.image} alt={meal.name} />
-              <h3>{meal.name}</h3>
-              <span className="meal-item-price">{meal.price}</span>
-              <p className="meal-item-description">{meal.description}</p>
-              <div className="meal-item-actions">
-                <Button className="button" onClick={() => handleAddCart(meal)}>
-                  Add to Cart
-                </Button>
-              </div>
-            </article>
-          </div>
-        );
+    <ul id="meals">
+      {loadedMeals.map((meal) => {
+        return <MealItem key={meal.id} meal={meal} />;
       })}
-    </div>
+    </ul>
   );
 }
