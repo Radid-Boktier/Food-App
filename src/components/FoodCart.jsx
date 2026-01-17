@@ -1,4 +1,5 @@
 import useHTTP from '../hooks/useHTTP.js';
+import Error from './Error.jsx';
 import MealItem from './MealItem.jsx';
 
 const requestConfig = {};
@@ -11,7 +12,11 @@ export default function FoodCart() {
   // console.log(loadedMeals);
 
   if (isLoading) {
-    return <p>Featching meals....</p>;
+    return <p className="center">Featching meals....</p>;
+  }
+
+  if (error) {
+    return <Error title="Failed to fetch meals" message={error} />;
   }
 
   return (
