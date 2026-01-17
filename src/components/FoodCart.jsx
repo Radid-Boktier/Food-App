@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+import useHTTP from '../hooks/useHTTP.js';
 import MealItem from './MealItem.jsx';
-export default function FoodCart({ handleAddCart }) {
-  const [loadedMeals, setLoadedMeals] = useState([]);
 
-  useEffect(() => {
-    async function fetchMeals() {
-      const response = await fetch('http://localhost:3000/meals');
-      if (!response.ok) {
-      }
-      const meals = await response.json();
-      setLoadedMeals(meals);
-    }
-    fetchMeals();
-  }, []);
+const requestConfig = {};
+export default function FoodCart() {
+  const {
+    data: loadedMeals,
+    isLoading,
+    error,
+  } = useHTTP('http://localhost:3000/meals', requestConfig, []);
+  // console.log(loadedMeals);
+
+  if (isLoading) {
+    return <p>Featching meals....</p>;
+  }
+
   return (
     <ul id="meals">
       {loadedMeals.map((meal) => {
